@@ -1,0 +1,247 @@
+/* ==========================================================================
+   DESIGN TOKENS
+   Change a value here and it updates the whole site — this is the only
+   place you should need to touch colors or fonts.
+   ========================================================================== */
+:root {
+  --bg: #f6f3ec;          /* page background — warm paper */
+  --bg-alt: #efebe0;      /* card / section background */
+  --ink: #22261f;         /* main text color */
+  --ink-soft: #55594c;    /* secondary text color */
+  --accent: #7c6a46;      /* bronze — links, labels */
+  --accent-deep: #445643; /* deep sage — hover states */
+  --line: #d8d2c2;        /* borders, dividers */
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --max-width: 880px;
+  --radius: 4px;
+}
+
+/* ==========================================================================
+   FUTURE: your handwriting font
+   1. Drop the font file(s) into the /fonts folder (e.g. fonts/my-hand.woff2)
+   2. Uncomment the @font-face rule below and fix the file name/path
+   3. Change --font-display above to 'MyHandwriting', cursive
+   That's it — every heading on every page updates automatically.
+   ========================================================================== */
+/*
+@font-face {
+  font-family: 'MyHandwriting';
+  src: url('../fonts/my-hand.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+/* ==========================================================================
+   RESET & BASE
+   ========================================================================== */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+a:hover { color: var(--accent-deep); border-bottom-color: currentColor; }
+
+:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 3px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  line-height: 1.15;
+  margin: 0 0 0.5em;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Nav */
+.site-header {
+  border-bottom: 1px solid var(--line);
+  padding: 24px 0;
+}
+.site-header .wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.site-header .name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+}
+.nav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.nav-links a { color: var(--ink-soft); border-bottom: none; }
+.nav-links a:hover,
+.nav-links a[aria-current="page"] { color: var(--accent-deep); }
+.nav-links a[aria-current="page"] {
+  border-bottom: 1px solid var(--accent-deep);
+}
+
+main { padding: 64px 0 96px; }
+
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   ABOUT PAGE
+   ========================================================================== */
+.hero {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.hero-photo img {
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+.hero h1 {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  position: relative;
+  display: inline-block;
+}
+.ink-underline {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin-top: 4px;
+  height: 14px;
+}
+.ink-underline path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 340;
+  stroke-dashoffset: 340;
+  animation: draw-underline 1s ease-out 0.3s forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ink-underline path { animation: none; stroke-dashoffset: 0; }
+}
+@keyframes draw-underline {
+  to { stroke-dashoffset: 0; }
+}
+
+.bio { max-width: 60ch; margin-top: 20px; color: var(--ink-soft); }
+
+@media (max-width: 640px) {
+  .hero { grid-template-columns: 1fr; text-align: center; }
+  .hero-photo img { margin: 0 auto; width: 160px; }
+  .ink-underline { margin-left: auto; margin-right: auto; }
+}
+
+/* ==========================================================================
+   WORKS PAGE
+   ========================================================================== */
+.works-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 32px;
+  margin-top: 40px;
+}
+.work-card {
+  background: var(--bg-alt);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.work-thumb {
+  aspect-ratio: 4 / 3;
+  background: var(--line);
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+.work-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+.work-card p { color: var(--ink-soft); font-size: 0.95rem; margin: 0 0 12px; }
+.work-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   CONTACT PAGE
+   ========================================================================== */
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 0;
+  max-width: 420px;
+}
+.contact-list li {
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.contact-list .label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
+}
